@@ -40,7 +40,7 @@ Pry::Prompt.add(
   :labs,
   'Prompt da embraslabs',
   ['>', '*']
-) do |obj, nest_level, _, separator|
+  ) do |obj, nest_level, _, separator|
   separator == '>' ? console_info(obj, nest_level, separator) : '*'
 end
 
@@ -56,22 +56,20 @@ Pry.config.exception_handler = proc do |output, exception, _|
   output.puts "from #{exception.backtrace.first}\e[0m"
 end
 
-if defined?(Rails) && Rails.env
-  if defined?(Rails::ConsoleMethods)
-    include Rails::ConsoleMethods
-  else
-    def reload!(print = true)
-      puts 'Reloading...' if print
-      ActionDispatch::Reloader.cleanup!
-      ActionDispatch::Reloader.prepare!
-      true
-    end
+if defined?(Rails::ConsoleMethods)
+  include Rails::ConsoleMethods
+else
+  def reload!(print = true)
+    puts 'Reloading...' if print
+    ActionDispatch::Reloader.cleanup!
+    ActionDispatch::Reloader.prepare!
+    true
   end
 end
 
 Pry.config.print = proc do |output, value|
   Pry::Helpers::BaseHelpers
-    .stagger_output("\n=> #{Pry::Helpers::BaseHelpers.colorize_code(Pry::Helpers::Text.strip_color(value.ai))} \n", output)
+  .stagger_output("\n=> #{Pry::Helpers::BaseHelpers.colorize_code(Pry::Helpers::Text.strip_color(value.ai))} \n", output)
 end
 
 Pry.commands.alias_command 'h', 'hist -T 20', desc: 'Last 20 commands'

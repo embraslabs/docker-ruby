@@ -10,7 +10,11 @@ if [[ -f Gemfile ]]; then
 fi
 
 if [ $# -eq 0 ]; then
-	exec /bin/bash
+  if [[ -f Gemfile ]]; then
+   exec rails s -b 0.0.0.0
+  else
+	 exec /bin/bash
+  fi
 else
 	echo "exec command => $@"
 	exec "$@"

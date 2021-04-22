@@ -19,6 +19,10 @@ COPY ./.irbrc /${_USER}
 COPY ./.pryrc /${_USER}
 COPY ./.bashrc /${_USER}
 
+COPY ./.irbrc /root
+COPY ./.pryrc /root
+COPY ./.bashrc /root
+
 # Reference: https://github.com/jfroom/docker-compose-rails-selenium-example
 COPY ./docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
@@ -30,8 +34,9 @@ ENV BUNDLE_PATH=/.gems \
     GEM_HOME=/.gems
 ENV PATH="${BUNDLE_BIN}:${PATH}"
 
-RUN gem install terminal-table
+RUN gem install terminal-table --version=3.0.0
 RUN gem install pry-byebug
+
 RUN gem install awesome_print
 
 RUN chown -R labs:labs /.gems
