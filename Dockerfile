@@ -33,6 +33,6 @@ ENV PATH="${BUNDLE_BIN}:${PATH}"
 
 RUN gem install terminal-table
 RUN gem install pry-byebug
-RUN gem install awesome_printi
+RUN gem install awesome_print
 
 RUN chown -R labs:labs /.gems 
