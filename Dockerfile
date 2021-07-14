@@ -11,7 +11,7 @@ ENV TZ=Etc/UTC
 RUN apt-get update -qq && \
 	apt-get install -y libpq-dev nodejs build-essential locales firebird-dev tzdata && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
-    adduser labs && mkdir /.gems && chown -R labs:labs /.gems
+    adduser labs && mkdir /.gems
 
 
 ENV LANG C.UTF-8
@@ -34,3 +34,5 @@ ENV PATH="${BUNDLE_BIN}:${PATH}"
 RUN gem install terminal-table
 RUN gem install pry-byebug
 RUN gem install awesome_print
+
+RUN chown -R labs:labs /.gems
