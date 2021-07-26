@@ -1,4 +1,6 @@
-FROM ruby:2.5.1
+ARG _RUBY_VERSION=2.7.2
+
+FROM ruby:${_RUBY_VERSION}
 LABEL maintainer "Embras Labs <labs@embras.net>"
 
 EXPOSE 3000
@@ -36,7 +38,6 @@ ENV PATH="${BUNDLE_BIN}:${PATH}"
 
 RUN gem install terminal-table --version=3.0.0
 RUN gem install pry-byebug
-
 RUN gem install awesome_print
 
 RUN chown -R labs:labs /.gems

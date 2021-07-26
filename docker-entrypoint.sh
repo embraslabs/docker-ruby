@@ -1,11 +1,14 @@
 #!/bin/bash
-# Interpreter identifier
 
 # Exit on fail
 set -e
 
-# Ensure all gems installed. Add binstubs to bin which has been added to PATH in Dockerfile.
-if [[ -f Gemfile ]]; then
+if [ -f tmp/pids/server.pid ]; then
+  rm tmp/pids/server.pid
+fi
+
+if [ -f Gemfile ]; then
+  # Ensure all gems installed. Add binstubs to bin which has been added to PATH in Dockerfile.
   bundle check || bundle install --binstubs="$BUNDLE_BIN"
 fi
 
