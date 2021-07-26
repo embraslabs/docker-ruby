@@ -1,7 +1,9 @@
 ARG _RUBY_VERSION=2.7.2
-
 FROM ruby:${_RUBY_VERSION}
 LABEL maintainer "Embras Labs <labs@embras.net>"
+
+ARG _RUBY_VERSION=2.7.2
+RUN echo ">>>>>>>>> _RUBY_VERSION=${_RUBY_VERSION}"
 
 EXPOSE 3000
 WORKDIR /app
