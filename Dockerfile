@@ -1,15 +1,21 @@
+ARG IMAGE_TYPE=api
 ARG _RUBY_VERSION=2.7.2
-FROM ruby:${_RUBY_VERSION}
+
+FROM ruby:${_RUBY_VERSION} as base-api
 LABEL maintainer "Embras Labs <labs@embras.net>"
 
-ARG _RUBY_VERSION=2.7.2
-RUN echo ">>>>>>>>> _RUBY_VERSION=${_RUBY_VERSION}"
+FROM base-api AS base-fullstack
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update -qq && apt-get install -y nodejs yarn && touch /home/miac
+
+ARG IMAGE_TYPE=api
+FROM base-${IMAGE_TYPE} as final
 
 EXPOSE 3000
 WORKDIR /app
 
 ARG _USER=home/labs
-
 ENV TZ=Etc/UTC
 
 RUN apt-get update -qq && \

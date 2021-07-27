@@ -1,6 +1,13 @@
 #!/bin/bash
 
 echo ">>>>>>>>> DOCKER_TAG=${DOCKER_TAG}"
-echo ">>>>>>>>> _RUBY_VERSION=${DOCKER_TAG}"
 
-docker build -t $IMAGE_NAME --build-arg _RUBY_VERSION=$DOCKER_TAG .
+if [[ $DOCKER_TAG =~ "fullstack" ]]; then
+    echo ">>>>>>>>> _RUBY_VERSION=${DOCKER_TAG/-fullstack/}"
+    echo ">>>>>>>>> Criando imagem para rails utilizar o rails como fullstack"
+    docker build -t $IMAGE_NAME --build-arg _RUBY_VERSION=${DOCKER_TAG/-fullstack/} --build-arg IMAGE_TYPE=fullstack .
+else
+    echo ">>>>>>>>> _RUBY_VERSION=${DOCKER_TAG}"
+    echo ">>>>>>>>> Criando imagem para rails utilizar o rails como api"
+    docker build -t $IMAGE_NAME --build-arg _RUBY_VERSION=$DOCKER_TAG .
+fi
