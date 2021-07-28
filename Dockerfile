@@ -23,7 +23,7 @@ ARG _IMAGE_TYPE=api
 FROM base-${_IMAGE_TYPE} as final
 
 EXPOSE 3000
-WORKDIR /app
+WORKDIR /project
 
 COPY ./.irbrc /${_USER}
 COPY ./.pryrc /${_USER}
