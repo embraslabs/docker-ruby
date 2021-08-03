@@ -1,6 +1,6 @@
 require 'terminal-table'
 
-def query(sql)
+def execute_sql(sql)
   ActiveRecord::Base.connection.exec_query(sql).map(&:to_h)
 end
 
@@ -91,7 +91,7 @@ Pry.commands.alias_command 'd', 'down'
 Pry.commands.alias_command 'b', 'break'
 
 puts Terminal::Table.new title: "\e[1;33mQuery\e[0m", headings: %w[Command Explanation], rows: [
-  ['query(sql)', 'Run any valid query and return array of objects'],
+  ['execute_sql(sql)', 'Run any valid query and return array of objects'],
   ['query_columns(sql)', 'Run any valid query and return the object that contains columns and rows'],
   ['table(sql)', 'Run any valid query and show the data in a table']
 ], style: { width: 100 }
